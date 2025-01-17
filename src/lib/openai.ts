@@ -1,7 +1,7 @@
 "use server";
 
 import OpenAI from "openai";
-import { summarizeDevices } from "./analytics";
+// import { summarizeDevices } from "./analytics";
 import {
   BusinessInfo,
   FormAnalyticsData,
@@ -17,8 +17,8 @@ export const createSummary = async (
     site_seo: SiteSeo;
   },
   stats: OverallTrafficProps,
-  formAnalytics: FormAnalyticsData,
-  devicesDetails: SystemsDetailsProps
+  formAnalytics: FormAnalyticsData
+  // devicesDetails: SystemsDetailsProps
 ) => {
   console.log("Creating summary...");
   const summary = {
@@ -27,12 +27,12 @@ export const createSummary = async (
   };
   // const processedStats = processStats(stats.traffic);
   //   console.log(data, "OPEN AI DATA ********");
-  const processedData = summarizeDevices(devicesDetails.devicesDetails);
+  // const processedData = summarizeDevices(devicesDetails.devicesDetails);
   const data = {
     // processedStats,
     summary,
     formAnalytics,
-    processedData,
+    // processedData,
   };
   const dataString = JSON.stringify(data, null, 2);
 

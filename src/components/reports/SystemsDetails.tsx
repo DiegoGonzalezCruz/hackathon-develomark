@@ -1,58 +1,53 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SystemsDetailsProps } from "@/types/siteDetails";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { ReportPageWrapper } from "./report-page-wrapper";
-import { summarizeDevices } from "@/lib/analytics";
 
+// Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+// Define component
 const SystemsDetails: React.FC<SystemsDetailsProps> = ({ devicesDetails }) => {
-  const [summary, setSummary] = useState<{
-    totalVisitors: number;
-    breakdown: {
-      deviceType: string;
-      count: number;
-      percentage: number;
-    }[];
-  } | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchSummary() {
-      try {
-        const data = await summarizeDevices(devicesDetails);
-        if (isMounted) {
-          setSummary(data);
-        }
-      } catch (err) {
-        console.error("Failed to fetch summary:", err);
-      }
+  // Function to classify device type
+  const getDeviceType = (os: string) => {
+    if (
+      os.toLowerCase().includes("windows") ||
+      os.toLowerCase().includes("mac os")
+    ) {
+      return "Desktop";
+    } else if (
+      os.toLowerCase().includes("android") ||
+      os.toLowerCase().includes("ios")
+    ) {
+      return "Mobile";
+    } else if (os.toLowerCase().includes("tablet")) {
+      return "Tablet";
     }
+    return "Unknown";
+  };
 
-    fetchSummary();
+  // Aggregate visitors by device type
+  const deviceTypeCounts: Record<string, number> = {};
+  let totalVisitors = 0;
 
-    return () => {
-      isMounted = false;
-    };
-  }, [devicesDetails]);
+  devicesDetails.forEach((monthDetail) => {
+    monthDetail.details.forEach((detail) => {
+      const deviceType = getDeviceType(detail.os);
+      deviceTypeCounts[deviceType] =
+        (deviceTypeCounts[deviceType] || 0) + detail.visitors;
+      totalVisitors += detail.visitors;
+    });
+  });
 
-  if (!summary) {
-    return <div>Loading summary...</div>;
-  }
-
-  // Destructure from summary
-  const { totalVisitors, breakdown } = summary;
-
-  // Build chart data from `breakdown`
+  // Chart.js data
   const chartData = {
-    labels: breakdown.map((b) => b.deviceType),
+    labels: Object.keys(deviceTypeCounts),
     datasets: [
       {
         label: "Visitors by Device Type",
-        data: breakdown.map((b) => b.count),
+        data: Object.values(deviceTypeCounts),
         backgroundColor: [
           "rgba(255, 99, 132, 0.6)",
           "rgba(54, 162, 235, 0.6)",
@@ -69,6 +64,15 @@ const SystemsDetails: React.FC<SystemsDetailsProps> = ({ devicesDetails }) => {
       },
     ],
   };
+
+  // Calculate percentages
+  const deviceTypePercentages = Object.entries(deviceTypeCounts).map(
+    ([deviceType, count]) => ({
+      deviceType,
+      count,
+      percentage: ((count / totalVisitors) * 100).toFixed(1), // Round to 1 decimal place
+    })
+  );
 
   return (
     <ReportPageWrapper title="Overview by Device" subtitle="Details by Device">
@@ -94,17 +98,21 @@ const SystemsDetails: React.FC<SystemsDetailsProps> = ({ devicesDetails }) => {
               </tr>
             </thead>
             <tbody>
-              {breakdown.map(({ deviceType, count, percentage }) => (
-                <tr key={deviceType} className="hover:bg-gray-100">
-                  <td className="border border-gray-300 px-4 py-2">
-                    {deviceType}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">{count}</td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {percentage}%
-                  </td>
-                </tr>
-              ))}
+              {deviceTypePercentages.map(
+                ({ deviceType, count, percentage }) => (
+                  <tr key={deviceType} className="hover:bg-gray-100">
+                    <td className="border border-gray-300 px-4 py-2">
+                      {deviceType}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {count}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {percentage}%
+                    </td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         </div>

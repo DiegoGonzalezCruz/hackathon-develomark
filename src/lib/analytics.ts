@@ -7,7 +7,6 @@ import {
   AggregatedData,
   AnalyticsResponse,
   FormAnalyticsData,
-  MonthDetails,
   MonthlyVisitsSchema,
 } from "@/types/siteDetails";
 import { format } from "date-fns";
@@ -198,68 +197,3 @@ export const getDevicesDetails = async () => {
     throw new Error("Failed to fetch device details analytics data");
   }
 };
-
-/** The output type for each device type after aggregation */
-export interface DeviceTypeStats {
-  deviceType: string;
-  count: number;
-  percentage: number;
-}
-
-/** The overall summary of device details */
-export interface DeviceDetailsSummary {
-  totalVisitors: number;
-  breakdown: DeviceTypeStats[];
-}
-
-/**
- * Determine the device type from OS name.
- * E.g., "Windows 10" => "Desktop", "iOS" => "Mobile", etc.
- */
-function classifyDeviceType(os: string): string {
-  const lowerOs = os.toLowerCase();
-  if (lowerOs.includes("windows") || lowerOs.includes("mac os")) {
-    return "Desktop";
-  } else if (lowerOs.includes("android") || lowerOs.includes("ios")) {
-    return "Mobile";
-  } else if (lowerOs.includes("tablet")) {
-    return "Tablet";
-  }
-  return "Unknown";
-}
-
-/**
- * Summarize visitors by device type from an array of MonthDetails.
- */
-export async function summarizeDevices(
-  devicesDetails: MonthDetails[]
-): Promise<DeviceDetailsSummary> {
-  const deviceTypeCounts: Record<string, number> = {};
-  let totalVisitors = 0;
-
-  devicesDetails.forEach((monthDetail) => {
-    monthDetail.details.forEach((detail) => {
-      const deviceType = classifyDeviceType(detail.os);
-      deviceTypeCounts[deviceType] =
-        (deviceTypeCounts[deviceType] || 0) + detail.visitors;
-      totalVisitors += detail.visitors;
-    });
-  });
-
-  // Build the breakdown array with percentages
-  const breakdown: DeviceTypeStats[] = Object.entries(deviceTypeCounts).map(
-    ([deviceType, count]) => {
-      const percentage = totalVisitors > 0 ? (count / totalVisitors) * 100 : 0;
-      return {
-        deviceType,
-        count,
-        percentage: parseFloat(percentage.toFixed(1)), // e.g. 12.3
-      };
-    }
-  );
-
-  return {
-    totalVisitors,
-    breakdown,
-  };
-}
