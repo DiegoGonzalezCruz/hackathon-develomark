@@ -14,7 +14,7 @@ export const endpoints = {
   },
 
   formsAnalytics: {
-    pathname: "/api/sites/multiscreen/get-forms/$siteId",
+    pathname: "/api/sites/multiscreen/get-forms/",
     description:
       "Get site forms (https://developer.duda.co/reference/reporting-form-submissions)",
   },

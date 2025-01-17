@@ -1,22 +1,18 @@
 import React from "react";
 import { ReportPageWrapper } from "./report-page-wrapper";
-import { Traffic } from "@/types/siteDetails";
-
-interface OverallTrafficProps {
-  traffic: Traffic;
-  getLast30Days: any;
-}
+import { OverallTrafficProps } from "@/types/siteDetails";
 
 export default function OverallTraffic({
   traffic,
   getLast30Days,
 }: OverallTrafficProps) {
-  console.log(traffic, "traffic");
-  console.log(getLast30Days, "getLast30Days");
+  // console.log(traffic, "traffic");
+  // console.log(getLast30Days, "getLast30Days");
   return (
     <ReportPageWrapper title="Overall Traffic" subtitle="Cool stats">
       <div className="rounded-lg px-8 py-6 shadow-md border flex flex-col gap-5">
         <div>
+          <h2 className="text-lg font-semibold">Analytics</h2>
           {Object.entries(traffic).map(([date, records]) => (
             <div key={date} className="mb-4">
               <h2 className="text-lg font-semibold">Date: {date}</h2>
@@ -29,6 +25,8 @@ export default function OverallTraffic({
               ))}
             </div>
           ))}
+        </div>
+        <div>
           {/* Display last 30 days data */}
           {getLast30Days && (
             <div className="mb-4">

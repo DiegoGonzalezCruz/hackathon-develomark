@@ -28,6 +28,38 @@ export const MonthlyVisitsSchema = z.record(
   z.array(VisitRecordSchema)
 );
 
+interface FormMessage {
+  [key: string]: string; // Dynamic form fields
+}
+
+export interface OverallTrafficProps {
+  traffic: Traffic;
+  getLast30Days: MonthlyVisits;
+}
+
+export interface Form {
+  form_title: string;
+  message: FormMessage;
+  date: string;
+  utm_campaign: string;
+}
+export type FormAnalyticsData = {
+  month: string;
+  CLICK_TO_CALLS?: number;
+  CLICK_TO_EMAILS?: number;
+  FORM_SUBMITS?: number;
+  CLICK_TO_MAPS?: number;
+}[];
+
+export interface ActivityRecord {
+  CLICK_TO_CALLS?: number;
+  CLICK_TO_EMAILS?: number;
+  FORM_SUBMITS?: number;
+  CLICK_TO_MAPS?: number;
+}
+
+export type FormsData = Form[];
+
 // Schema for the overall traffic data
 export const TrafficSchema = z.record(z.string(), z.array(VisitRecordSchema));
 

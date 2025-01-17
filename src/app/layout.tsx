@@ -3,7 +3,7 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { PropsWithChildren } from "react";
 
 import "./globals.css";
-import { getSiteDetails } from "@/lib/siteIds";
+import { getSiteDetails } from "@/lib/analytics";
 
 const siteDetails = await getSiteDetails();
 // console.log(siteDetails, "siteDetails");
