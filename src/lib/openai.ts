@@ -2,21 +2,38 @@
 
 import { processStats } from "@/components/reports/Traffic/GeneralStats";
 import OpenAI from "openai";
+import { summarizeDevices } from "./analytics";
+import {
+  BusinessInfo,
+  FormAnalyticsData,
+  OverallTrafficProps,
+  SiteSeo,
+  SystemsDetailsProps,
+} from "@/types/siteDetails";
 const openai = new OpenAI();
 
-export const createSummary = async (siteDetails, stats, formAnalytics) => {
+export const createSummary = async (
+  siteDetails: {
+    site_business_info: BusinessInfo;
+    site_seo: SiteSeo;
+  },
+  stats: OverallTrafficProps,
+  formAnalytics: FormAnalyticsData,
+  devicesDetails: SystemsDetailsProps
+) => {
   console.log("Creating summary...");
   const summary = {
     businessInfo: siteDetails.site_business_info,
     siteSeo: siteDetails.site_seo,
   };
-  const processedStats = processStats(stats);
+  const processedStats = processStats(stats.traffic);
   //   console.log(data, "OPEN AI DATA ********");
-
+  const processedData = summarizeDevices(devicesDetails.devicesDetails);
   const data = {
     processedStats,
     summary,
     formAnalytics,
+    processedData,
   };
   const dataString = JSON.stringify(data, null, 2);
 

@@ -25,7 +25,8 @@ const devicesDetails = await getDevicesDetails();
 const AIsummary = await createSummary(
   siteDetails,
   getLast30Days,
-  formAnalytics
+  formAnalytics,
+  devicesDetails
 );
 
 // console.log(AIsummary, "AIsummary");
@@ -46,7 +47,7 @@ export default async function Page({
   return (
     <div>
       <Overview summary={summary} />
-      <OpenAIReport AIsummary={AIsummary} />
+      <OpenAIReport AIsummary={AIsummary as string} />
       <OverallTraffic traffic={traffic} getLast30Days={getLast30Days} />
       <FormsData formsData={formsData} formAnalytics={formAnalytics} />
       <SystemsDetails devicesDetails={devicesDetails} />
