@@ -1,6 +1,5 @@
 "use server";
 
-import { processStats } from "@/components/reports/Traffic/GeneralStats";
 import OpenAI from "openai";
 import { summarizeDevices } from "./analytics";
 import {
@@ -26,11 +25,11 @@ export const createSummary = async (
     businessInfo: siteDetails.site_business_info,
     siteSeo: siteDetails.site_seo,
   };
-  const processedStats = processStats(stats.traffic);
+  // const processedStats = processStats(stats.traffic);
   //   console.log(data, "OPEN AI DATA ********");
   const processedData = summarizeDevices(devicesDetails.devicesDetails);
   const data = {
-    processedStats,
+    // processedStats,
     summary,
     formAnalytics,
     processedData,
