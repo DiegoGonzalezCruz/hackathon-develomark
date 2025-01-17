@@ -18,7 +18,6 @@ export default function FormsDataComponent({
       subtitle="Details of all submitted forms."
     >
       <div className="rounded-lg px-8 py-6 shadow-md border flex flex-col gap-5">
-        {/* Analytics for Form Submissions */}
         <FormAnalytics formAnalytics={formAnalytics} />
         <FormTable formsData={formsData} />
       </div>

@@ -1,57 +1,65 @@
-import { FormAnalyticsData } from "@/types/siteDetails";
+import { FormAnalyticsData, ActivityRecord } from "@/types/siteDetails";
 import React from "react";
+
+// Helper to calculate percentage difference
+const calculatePercentageDifference = (
+  current: number,
+  previous: number
+): string => {
+  if (previous === 0) return "N/A"; // Avoid division by zero
+  const difference = ((current - previous) / previous) * 100;
+  return `${difference > 0 ? "+" : ""}${difference.toFixed(2)}%`;
+};
 
 const FormAnalytics = ({
   formAnalytics,
 }: {
   formAnalytics: FormAnalyticsData;
 }) => {
-  console.log(formAnalytics, "formAnalytics");
+  // Sort the data by month (assumes format YYYY-MM-DD for month)
+  const sortedAnalytics = [...formAnalytics].sort(
+    (a, b) => new Date(a.month).getTime() - new Date(b.month).getTime()
+  );
+
+  // Get the last two months
+  const lastMonth = sortedAnalytics[sortedAnalytics.length - 1];
+  const previousMonth = sortedAnalytics[sortedAnalytics.length - 2];
+
+  // Ensure data is properly typed and exists
+  const metrics: (keyof ActivityRecord)[] = [
+    "CLICK_TO_EMAILS",
+    "FORM_SUBMITS",
+    "CLICK_TO_MAPS",
+    "CLICK_TO_CALLS",
+  ];
+
+  const comparisons = metrics.map((metric) => ({
+    metric,
+    current: lastMonth[metric] || 0,
+    previous: previousMonth[metric] || 0,
+    growth: calculatePercentageDifference(
+      lastMonth[metric] || 0,
+      previousMonth[metric] || 0
+    ),
+  }));
+
   return (
     <div>
-      <div className="overflow-x-auto mt-6">
-        <h3 className="text-lg font-medium mb-2">
-          Form Analytics (Last 2 Months)
-        </h3>
-        <table className="table-auto border-collapse border border-gray-300 w-full">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border border-gray-300 px-4 py-2">Month</th>
-
-              <th className="border border-gray-300 px-4 py-2">
-                Click to Emails
-              </th>
-              <th className="border border-gray-300 px-4 py-2">Form Submits</th>
-              <th className="border border-gray-300 px-4 py-2">
-                Click to Maps
-              </th>
-              <th className="border border-gray-300 px-4 py-2">
-                Click to Calls
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {formAnalytics.map((analytics, index) => (
-              <tr key={index} className="hover:bg-gray-100">
-                <td className="border border-gray-300 px-4 py-2">
-                  {analytics.month}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {analytics.CLICK_TO_EMAILS || 0}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {analytics.FORM_SUBMITS || 0}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {analytics.CLICK_TO_MAPS || 0}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {analytics.CLICK_TO_CALLS || 0}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <h3 className="text-lg font-medium mb-4">
+        Form Analytics (Comparison: {previousMonth.month} → {lastMonth.month})
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {comparisons.map(({ metric, current, previous, growth }) => (
+          <div key={metric} className="stats shadow">
+            <div className="stat">
+              <div className="stat-title">{metric.replace(/_/g, " ")}</div>
+              <div className="stat-value">{current}</div>
+              <div className="stat-desc">
+                {growth} compared to {previousMonth.month} ({previous})
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

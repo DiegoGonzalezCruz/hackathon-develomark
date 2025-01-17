@@ -169,7 +169,7 @@ export const getDevicesDetails = async () => {
 
   try {
     const response = await axios.get<AnalyticsResponse>(url, { params });
-    console.log(response.data, "Raw API response");
+    // console.log(response.data, "Raw API response");
 
     // Transform and structure the response data
     const transformedData = Object.entries(response.data).map(
@@ -187,7 +187,7 @@ export const getDevicesDetails = async () => {
       }
     );
 
-    console.log(transformedData, "Transformed Device Details");
+    // console.log(transformedData, "Transformed Device Details");
     return transformedData;
   } catch (error) {
     console.error(

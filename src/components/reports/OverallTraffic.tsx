@@ -1,6 +1,8 @@
 import React from "react";
 import { ReportPageWrapper } from "./report-page-wrapper";
 import { OverallTrafficProps } from "@/types/siteDetails";
+import GeneralStats from "./Traffic/GeneralStats";
+import Chart from "./Traffic/Chart";
 
 export default function OverallTraffic({
   traffic,
@@ -11,41 +13,8 @@ export default function OverallTraffic({
   return (
     <ReportPageWrapper title="Overall Traffic" subtitle="Cool stats">
       <div className="rounded-lg px-8 py-6 shadow-md border flex flex-col gap-5">
-        <div>
-          <h2 className="text-lg font-semibold">Analytics</h2>
-          {Object.entries(traffic).map(([date, records]) => (
-            <div key={date} className="mb-4">
-              <h2 className="text-lg font-semibold">Date: {date}</h2>
-              {records.map((record, index) => (
-                <ul key={index} className="ml-4">
-                  <li>Visitors: {record.VISITORS}</li>
-                  <li>Visits: {record.VISITS}</li>
-                  <li>Page Views: {record.PAGE_VIEWS}</li>
-                </ul>
-              ))}
-            </div>
-          ))}
-        </div>
-        <div>
-          {/* Display last 30 days data */}
-          {getLast30Days && (
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold">Last 30 Days Traffic</h2>
-              {Object.entries(getLast30Days).map(([date, records]) => (
-                <div key={date} className="mb-4">
-                  <h3 className="text-md font-medium">Date: {date}</h3>
-                  {records.map((record, index) => (
-                    <ul key={index} className="ml-4">
-                      <li>Visitors: {record.VISITORS}</li>
-                      <li>Visits: {record.VISITS}</li>
-                      <li>Page Views: {record.PAGE_VIEWS}</li>
-                    </ul>
-                  ))}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <GeneralStats stats={getLast30Days} />
+        <Chart data={traffic} />
       </div>
     </ReportPageWrapper>
   );

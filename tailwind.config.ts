@@ -1,21 +1,22 @@
 import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
+import daisyui from "daisyui";
 
 export default {
   content: ["./src/**/*.tsx"],
   theme: {
     extend: {
       transitionDuration: {
-        DEFAULT: "300ms"
+        DEFAULT: "300ms",
       },
       fontFamily: {
         title: ["'Libre Franklin'", ...defaultTheme.fontFamily.sans],
-        body: ["'Nunito'", ...defaultTheme.fontFamily.sans]
+        body: ["'Nunito'", ...defaultTheme.fontFamily.sans],
       },
       colors: {
         "brand-gray": "#242424",
         neutral: {
-          DEFAULT: "#a3a3a3"
+          DEFAULT: "#a3a3a3",
         },
 
         positive: {
@@ -48,7 +49,7 @@ export default {
           800: "#9e0050",
           900: "#86024a",
           950: "#4c0024",
-          DEFAULT: "#ff006d"
+          DEFAULT: "#ff006d",
         },
 
         bide: {
@@ -63,7 +64,7 @@ export default {
           800: "#3b7791",
           900: "#36657d",
           950: "#1d3f53",
-          DEFAULT: "#6ac0d8"
+          DEFAULT: "#6ac0d8",
         },
 
         evergreen: {
@@ -78,7 +79,7 @@ export default {
           800: "#378138",
           900: "#2f6b32",
           950: "#133914",
-          DEFAULT: "#89d18a"
+          DEFAULT: "#89d18a",
         },
 
         ember: {
@@ -93,7 +94,7 @@ export default {
           800: "#c92513",
           900: "#a22414",
           950: "#570d08",
-          DEFAULT: "#fe875c"
+          DEFAULT: "#fe875c",
         },
 
         ultraviolet: {
@@ -108,10 +109,10 @@ export default {
           800: "#55437e",
           900: "#483868",
           950: "#2d2445",
-          DEFAULT: "#816dc2"
-        }
-      }
-    }
+          DEFAULT: "#816dc2",
+        },
+      },
+    },
   },
-  plugins: []
+  plugins: [daisyui],
 } satisfies Config;
