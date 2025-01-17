@@ -58,6 +58,52 @@ export interface ActivityRecord {
   CLICK_TO_MAPS?: number;
 }
 
+export interface AggregatedData {
+  CLICK_TO_CALLS: number;
+  CLICK_TO_EMAILS: number;
+  FORM_SUBMITS: number;
+  CLICK_TO_MAPS: number;
+}
+
+// Represents a single dimension (e.g., browser and OS)
+export interface Dimension {
+  browser: string;
+  os: string;
+}
+
+// Represents the analytics data for a dimension
+export interface Data {
+  VISITORS: number;
+  VISITS: number;
+  PAGE_VIEWS: number;
+}
+
+// Represents a single analytics record for a given month
+export interface AnalyticsRecord {
+  dimension: Dimension;
+  data: Data;
+}
+// TypeScript types for props (if using TypeScript)
+export interface DeviceDetail {
+  browser: string;
+  os: string;
+  visitors: number;
+  visits: number;
+  pageViews: number;
+}
+
+export interface MonthDetails {
+  month: string;
+  details: DeviceDetail[];
+}
+
+export interface SystemsDetailsProps {
+  devicesDetails: MonthDetails[];
+}
+
+// Represents the full response from the API, grouped by month
+export type AnalyticsResponse = Record<string, AnalyticsRecord[]>;
+
 export type FormsData = Form[];
 
 // Schema for the overall traffic data

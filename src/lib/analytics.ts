@@ -4,6 +4,8 @@ import axios from "axios";
 import { SiteDetails, SiteDetailsSchema } from "./schemas";
 import {
   ActivityRecord,
+  AggregatedData,
+  AnalyticsResponse,
   FormAnalyticsData,
   MonthlyVisitsSchema,
 } from "@/types/siteDetails";
@@ -114,9 +116,7 @@ export const getFormsData = async () => {
   }
 };
 
-export async function getLastTwoMonthsFormsData(): Promise<
-  FormAnalyticsData[]
-> {
+export async function getLastTwoMonthsFormsData(): Promise<FormAnalyticsData> {
   const response = await axios.get(
     "http://192.168.0.141:3000/api/analytics/site/c31672ae?from=2024-11-17&to=2025-01-17&result=activities&dateGranularity=MONTHS"
   );
@@ -124,10 +124,10 @@ export async function getLastTwoMonthsFormsData(): Promise<
   const data = response.data as Record<string, ActivityRecord[]>;
 
   // Transform the data to include all relevant fields
-  const transformedData: FormAnalyticsData[] = Object.entries(data).map(
+  const transformedData: FormAnalyticsData = Object.entries(data).map(
     ([month, activities]) => {
       // Initialize the accumulator with default values for all fields
-      const aggregatedData = activities.reduce(
+      const aggregatedData = activities.reduce<AggregatedData>(
         (acc, activity) => {
           acc.CLICK_TO_CALLS += activity.CLICK_TO_CALLS || 0;
           acc.CLICK_TO_EMAILS += activity.CLICK_TO_EMAILS || 0;
@@ -155,3 +155,45 @@ export async function getLastTwoMonthsFormsData(): Promise<
 
   return transformedData;
 }
+
+export const getDevicesDetails = async () => {
+  console.log("Fetching device details analytics data...");
+
+  const url = `http://192.168.0.141:3000/api/analytics/site/c31672ae?from=2024-11-17&to=2025-01-17&dimension=system&result=traffic&dateGranularity=MONTHS`;
+  const params: Record<string, string> = {
+    from: "2024-01-01", // Start date
+    to: "2025-01-01", // End date
+    dimension: "os", // Dimension type: system
+    dateGranularity: "MONTHS", // Monthly granularity
+  };
+
+  try {
+    const response = await axios.get<AnalyticsResponse>(url, { params });
+    console.log(response.data, "Raw API response");
+
+    // Transform and structure the response data
+    const transformedData = Object.entries(response.data).map(
+      ([month, records]) => {
+        return {
+          month,
+          details: records.map((record) => ({
+            browser: record.dimension.browser,
+            os: record.dimension.os,
+            visitors: record.data.VISITORS,
+            visits: record.data.VISITS,
+            pageViews: record.data.PAGE_VIEWS,
+          })),
+        };
+      }
+    );
+
+    console.log(transformedData, "Transformed Device Details");
+    return transformedData;
+  } catch (error) {
+    console.error(
+      "Error fetching or processing device details analytics data:",
+      error
+    );
+    throw new Error("Failed to fetch device details analytics data");
+  }
+};

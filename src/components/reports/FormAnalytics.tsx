@@ -17,7 +17,17 @@ const FormAnalytics = ({
           <thead>
             <tr className="bg-gray-200">
               <th className="border border-gray-300 px-4 py-2">Month</th>
+
+              <th className="border border-gray-300 px-4 py-2">
+                Click to Emails
+              </th>
               <th className="border border-gray-300 px-4 py-2">Form Submits</th>
+              <th className="border border-gray-300 px-4 py-2">
+                Click to Maps
+              </th>
+              <th className="border border-gray-300 px-4 py-2">
+                Click to Calls
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -27,7 +37,16 @@ const FormAnalytics = ({
                   {analytics.month}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
-                  {analytics.formSubmits}
+                  {analytics.CLICK_TO_EMAILS || 0}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {analytics.FORM_SUBMITS || 0}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {analytics.CLICK_TO_MAPS || 0}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {analytics.CLICK_TO_CALLS || 0}
                 </td>
               </tr>
             ))}
