@@ -24,9 +24,9 @@ const devicesDetails = await getDevicesDetails();
 
 const AIsummary = await createSummary(
   siteDetails,
-  getLast30Days,
-  formAnalytics,
-  devicesDetails
+  // getLast30Days,
+  formAnalytics
+  // devicesDetails
 );
 
 // console.log(AIsummary, "AIsummary");

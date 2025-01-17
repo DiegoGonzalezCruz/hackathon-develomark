@@ -5,9 +5,9 @@ import OpenAI from "openai";
 import {
   BusinessInfo,
   FormAnalyticsData,
-  OverallTrafficProps,
+  // OverallTrafficProps,
   SiteSeo,
-  SystemsDetailsProps,
+  // SystemsDetailsProps,
 } from "@/types/siteDetails";
 const openai = new OpenAI();
 
@@ -16,11 +16,11 @@ export const createSummary = async (
     site_business_info: BusinessInfo;
     site_seo: SiteSeo;
   },
-  stats: OverallTrafficProps,
+  // stats: OverallTrafficProps,
   formAnalytics: FormAnalyticsData
   // devicesDetails: SystemsDetailsProps
 ) => {
-  console.log("Creating summary...");
+  // console.log("Creating summary...");
   const summary = {
     businessInfo: siteDetails.site_business_info,
     siteSeo: siteDetails.site_seo,
@@ -59,10 +59,10 @@ export const createSummary = async (
     ],
   });
 
-  console.log(
-    completion.choices[0].message.content,
-    "OPEN AI RESPONSE ********"
-  );
+  // console.log(
+  //   completion.choices[0].message.content,
+  //   "OPEN AI RESPONSE ********"
+  // );
 
   return completion.choices[0].message.content;
 };
