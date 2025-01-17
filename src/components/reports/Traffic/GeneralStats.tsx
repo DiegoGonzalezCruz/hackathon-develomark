@@ -65,7 +65,10 @@ const GeneralStats = ({ stats }: { stats: MonthlyVisits }) => {
             <div key={date} className="mb-4">
               <h3 className="text-md font-medium">Date: {date}</h3>
               {records.map((record, index) => (
-                <div key={index} className="stats shadow">
+                <div
+                  key={index}
+                  className="stats shadow  flex flex-col md:flex-row "
+                >
                   <div className="stat">
                     <div className="stat-title">Total Visitors</div>
                     <div className="stat-value">{record.VISITORS}</div>

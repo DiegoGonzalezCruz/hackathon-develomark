@@ -1,5 +1,13 @@
 import { FormsData } from "@/types/siteDetails";
 import React, { useState } from "react";
+import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const FormTable = ({ formsData }: { formsData: FormsData }) => {
   const initialFormTitle = formsData.length > 0 ? formsData[0].form_title : "";
@@ -25,16 +33,15 @@ const FormTable = ({ formsData }: { formsData: FormsData }) => {
   );
   return (
     <div>
-      {" "}
       {/* Filter Dropdown */}
-      <div className="mb-4">
-        <label
+      <div className="mb-4  max-w-xl">
+        <Label
           htmlFor="formFilter"
           className="block text-sm font-medium text-gray-700"
         >
           Filter by Form Title:
-        </label>
-        <select
+        </Label>
+        {/* <select
           id="formFilter"
           value={selectedFormTitle}
           onChange={(e) => setSelectedFormTitle(e.target.value)}
@@ -46,7 +53,22 @@ const FormTable = ({ formsData }: { formsData: FormsData }) => {
               {title}
             </option>
           ))}
-        </select>
+        </select> */}
+        <Select
+          value={selectedFormTitle}
+          onValueChange={(value) => setSelectedFormTitle(value)}
+        >
+          <SelectTrigger className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ">
+            <SelectValue placeholder="Select Form" />
+          </SelectTrigger>
+          <SelectContent>
+            {formTitles.map((title, index) => (
+              <SelectItem key={index} value={title}>
+                {title}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       {/* Table */}
       <div className="overflow-x-auto">

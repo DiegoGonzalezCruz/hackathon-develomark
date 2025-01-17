@@ -13,8 +13,8 @@ export function ReportPageWrapper({
 }: ReportPageWrapperProps) {
   return (
     <div>
-      <header className="bg-neutral-100 h-24 shadow-md sticky top-0">
-        <div className="max-w-7xl w-full mx-auto px-4 py-6 grid grid-cols-[auto,1fr] grid-rows-[1.5fr,1fr] gap-x-4">
+      <header className="bg-neutral-100 h-fit md:h-24 shadow-md sticky top-0  z-50">
+        <div className="max-w-7xl w-full mx-auto p-5 md:py-6 flex flex-col md:flex-row items-center justify-start">
           <div className="row-span-2 flex items-center">
             <Image
               src="https://app.splashdash.ai/assets/icons/DudaExpert.svg"
@@ -24,8 +24,10 @@ export function ReportPageWrapper({
               height={100}
             />
           </div>
-          <h2 className="text-xl font-bold self-end">{title}</h2>
-          <p className="text-sm font-semibold self-start">{subtitle}</p>
+          <div>
+            <h2 className=" text-sm md:text-xl font-bold self-end">{title}</h2>
+            <p className="text-sm font-semibold self-start">{subtitle}</p>
+          </div>
         </div>
       </header>
       <div className="max-w-7xl w-full mx-auto px-4 pt-8 pb-24">{children}</div>

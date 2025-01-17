@@ -12,7 +12,7 @@ export default function OverallTraffic({
   // console.log(getLast30Days, "getLast30Days");
   return (
     <ReportPageWrapper title="Overall Traffic" subtitle="Cool stats">
-      <div className="rounded-lg px-8 py-6 shadow-md border flex flex-col gap-5">
+      <div className="rounded-lg px-8 py-6 shadow-md border flex flex-col gap-5 ">
         <GeneralStats stats={getLast30Days} />
         <Chart data={traffic} />
       </div>

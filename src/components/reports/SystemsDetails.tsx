@@ -76,14 +76,14 @@ const SystemsDetails: React.FC<SystemsDetailsProps> = ({ devicesDetails }) => {
 
   return (
     <ReportPageWrapper title="Overview by Device" subtitle="Details by Device">
-      <div className="rounded-lg px-8 py-6 shadow-md border">
+      <div className="rounded-lg px-2 md:px-8 py-6 shadow-md border">
         <h2 className="text-lg font-medium mb-4">BY DEVICE TYPE:</h2>
         <p className="mb-4">TOTAL VISITORS: {totalVisitors}</p>
 
-        <div className="flex flex-row gap-5">
+        <div className="flex flex-col md:flex-row gap-5">
           {/* Pie Chart */}
-          <div className="w-1/2">
-            <Pie data={chartData} />
+          <div className="md:w-1/2  w-full ">
+            <Pie data={chartData} className="w-full" />
           </div>
 
           {/* Table */}

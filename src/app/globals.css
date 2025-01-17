@@ -31,5 +31,5 @@ h6 {
 }
 
 .wrapper {
-  @apply p-10;
+  @apply md:p-10;
 }
