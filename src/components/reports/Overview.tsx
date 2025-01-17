@@ -1,12 +1,7 @@
 import React from "react";
 import { ReportPageWrapper } from "./report-page-wrapper";
-import { BusinessInfo, SiteSeo } from "@/types/siteDetails";
 
-export default function Overview({
-  summary,
-}: {
-  summary: { businessInfo: BusinessInfo; siteSeo: SiteSeo };
-}) {
+export default function Overview({ summary }: { summary: SiteDetailsSchema }) {
   // console.log(summary, "summary");
   return (
     <ReportPageWrapper

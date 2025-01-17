@@ -31,10 +31,12 @@ const AIsummary = await createSummary(
 
 // console.log(AIsummary, "AIsummary");
 
-export const summary = {
-  businessInfo: siteDetails.site_business_info,
-  siteSeo: siteDetails.site_seo,
-};
+// export const summary = {
+//   businessInfo: siteDetails.site_business_info,
+//   siteSeo: siteDetails.site_seo,
+//   phoneNumber: siteDetails.phone_number,
+//   email: siteDetails.email,
+// };
 
 export default async function Page({
   params,
@@ -46,7 +48,7 @@ export default async function Page({
 
   return (
     <div>
-      <Overview summary={summary} />
+      <Overview summary={siteDetails} />
       <OpenAIReport AIsummary={AIsummary as string} />
       <OverallTraffic traffic={traffic} getLast30Days={getLast30Days} />
       <FormsData formsData={formsData} formAnalytics={formAnalytics} />

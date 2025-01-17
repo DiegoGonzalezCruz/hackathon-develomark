@@ -10,7 +10,7 @@ export const Sidebar = (props: { siteDetails: SiteDetails }) => {
   const sidebar = useContext(SidebarContext);
   const { siteDetails } = props;
 
-  // console.log(siteDetails, " SiteDetails");
+  console.log(siteDetails, " SiteDetails");
   return (
     <div
       data-open={sidebar.open || undefined}

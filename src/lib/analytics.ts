@@ -36,17 +36,17 @@ export const getMonthlyVisits = async (
   fromDate: string = "2024-01-01",
   toDate?: string // Make it optional
 ) => {
-  console.log("Fetching monthly visits data");
+  // console.log("Fetching monthly visits data");
   const todayDate = toDate || format(new Date(), "yyyy-MM-dd");
 
   const url = `${baseUrl}${endpoints.analytics.pathname}${siteId}`;
-  console.log(url, "***** URL *****");
+  // console.log(url, "***** URL *****");
   const params: Record<string, string> = {
     from: fromDate, // Always include the 'from' date
     to: todayDate,
     dateGranularity: "MONTHS", // Monthly granularity
   };
-  console.log(url, params, "***** Params *****");
+  // console.log(url, params, "***** Params *****");
 
   // Only add 'to' to params if it is defined
   if (toDate) {
@@ -69,7 +69,7 @@ export const getMonthlyVisits = async (
 };
 
 export const getLast30DaysAnalytics = async () => {
-  console.log("Fetching last 30 days analytics data");
+  // console.log("Fetching last 30 days analytics data");
 
   const url = `${baseUrl}${endpoints.analytics.pathname}${siteId}`;
   // console.log(url, "***** URL *****");
@@ -99,7 +99,7 @@ export const getLast30DaysAnalytics = async () => {
 };
 
 export const getFormsData = async () => {
-  console.log("Fetching forms data");
+  // console.log("Fetching forms data");
   const url = `${baseUrl}${endpoints.formsAnalytics.pathname}${siteId}`;
   // console.log(url, "***** URL *****");
 
@@ -157,7 +157,7 @@ export async function getLastTwoMonthsFormsData(): Promise<FormAnalyticsData> {
 }
 
 export const getDevicesDetails = async () => {
-  console.log("Fetching device details analytics data...");
+  // console.log("Fetching device details analytics data...");
 
   const url = `http://192.168.0.141:3000/api/analytics/site/c31672ae?from=2024-11-17&to=2025-01-17&dimension=system&result=traffic&dateGranularity=MONTHS`;
   const params: Record<string, string> = {
