@@ -3,10 +3,14 @@
 import { useContext } from "react";
 import { SidebarContext } from "./ClientProvider";
 import Image from "next/image";
+import { SiteDetails } from "@/lib/schemas";
 
-export const Sidebar = () => {
+export const Sidebar = (props: { siteDetails: SiteDetails }) => {
+  // console.log(props, "props");
   const sidebar = useContext(SidebarContext);
+  const { siteDetails } = props;
 
+  // console.log(siteDetails, " SiteDetails");
   return (
     <div
       data-open={sidebar.open || undefined}
@@ -21,6 +25,7 @@ export const Sidebar = () => {
           height={50}
         />
       </div>
+      <div className="px-5">{siteDetails.site_business_info.business_name}</div>
       <button
         className="absolute grid place-items-center bottom-2 right-2 size-14 hover:bg-neutral-200 rounded-xl"
         onClick={sidebar.toggle}
