@@ -12,6 +12,7 @@ import {
   getSiteDetails,
 } from "@/lib/analytics";
 import { createSummary } from "@/lib/openai";
+import { redirect } from "next/navigation";
 
 const siteDetails = await getSiteDetails();
 // console.log(siteDetails, "siteDetails");
@@ -45,6 +46,9 @@ export default async function Page({
 }) {
   const clientId = (await params).clientId;
   console.log(clientId, "clientId");
+  if (!clientId) {
+    redirect("/login");
+  }
 
   return (
     <div>
