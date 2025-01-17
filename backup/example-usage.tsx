@@ -1,5 +1,5 @@
-import { DashboardLayout } from "../app/layout";
-import { ReportPageWrapper } from "./report-page-wrapper";
+import DashboardLayout from "@/app/layout";
+import { ReportPageWrapper } from "../src/components/reports/report-page-wrapper";
 import "./tailwind.css";
 
 export function App() {

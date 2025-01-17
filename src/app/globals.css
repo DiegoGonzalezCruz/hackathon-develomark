@@ -9,6 +9,27 @@ body {
   @apply font-body bg-neutral-100 text-brand-gray;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @apply font-title;
+}
+
+.debug {
+  @apply bg-red-500 border border-red-500;
+}
+
+.debug1 {
+  @apply border border-red-500;
+}
+
+.debug2 {
+  @apply border border-green-500;
+}
+
+.wrapper {
+  @apply p-10;
 }

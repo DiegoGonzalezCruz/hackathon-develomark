@@ -14,8 +14,8 @@ export const Sidebar = () => {
     >
       <div className="p-3 group-data-[open]:opacity-100 opacity-0 transition-opacity">
         <Image
-          src="./logo_splashdash_gray+magenta.svg"
-          className="px-10"
+          src="/logo_splashdash_gray+magenta.svg"
+          className="w-full h-full object-cover rounded-xl "
           alt="Logo"
           width={50}
           height={50}
